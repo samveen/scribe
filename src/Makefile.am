@@ -52,7 +52,7 @@ endif
 
 
 # Set libraries external to this component.
-EXTERNAL_LIBS = -L$(thrift_home)/lib -L$(fb303_home)/lib -L$(hadoop_home)/lib -lfb303 -lthrift -lthriftnb
+EXTERNAL_LIBS = -L$(thrift_home)/lib $(FB303_LIBS) -L$(hadoop_home)/lib -lthrift -lthriftnb $(BOOST_SYSTEM_LIB) $(BOOST_FILESYSTEM_LIB)
 EXTERNAL_LIBS += -levent -lpthread
 if USE_SCRIBE_HDFS
   EXTERNAL_LIBS += -lhdfs -ljvm
@@ -72,7 +72,7 @@ AM_CPPFLAGS += -I$(hadoop_home)/include
 AM_CPPFLAGS += $(BOOST_CPPFLAGS)
 AM_CPPFLAGS += $(FB_CPPFLAGS) $(DEBUG_CPPFLAGS)
 
-AM_LDFLAGS = $(BOOST_LDFLAGS) $(BOOST_SYSTEM_LIB) $(BOOST_FILESYSTEM_LIB)
+AM_LDFLAGS = $(BOOST_LDFLAGS)
 
 # Section 3 #############################################################################
 # GENERATE BUILD RULES
@@ -107,7 +107,7 @@ scribed_SOURCES = store.cpp store_queue.cpp conf.cpp file.cpp conn_pool.cpp scri
 if USE_SCRIBE_HDFS
   scribed_SOURCES += HdfsFile.cpp
 endif
-scribed_LDADD = $(EXTERNAL_LIBS) $(INTERNAL_LIBS)
+scribed_LDADD = $(INTERNAL_LIBS) $(EXTERNAL_LIBS)
 
 if SHARED
 scribed_DEPENDENCIES = libscribe.so libdynamicbucketupdater.so

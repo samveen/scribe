@@ -59,6 +59,8 @@ FB_WITH_PATH([smc_home], [smcpath], [${EXTERNAL_PATH}/services/trunk/src])
 FB_WITH_PATH([fb_home], [fbpath], [${EXTERNAL_PATH}/libfacebook])
 FB_WITH_PATH([hadoop_home], [hadooppath], [/usr/local])
 
+PKG_CHECK_MODULES(FB303, fb303)
+
 # Require boost 1.36 with system and filesytem libraries
 AX_BOOST_BASE([1.36])
 AX_BOOST_SYSTEM
